@@ -4,19 +4,20 @@
 #include <string.h>
 
 // Structures section
-struct Race{//une structure Race qui possède les variables membres
+typedef struct {//une structure Race qui possède les variables membres
     int numberOfLaps;
     int currentLap;
     char firstPlaceDriverName;
     char firstPlaceRaceCarColor;
 
-};
+}Race ;
 
-struct RaceCar { //une structure RaceCar qui a les variables cars
+typedef struct  { //une structure RaceCar qui a les variables cars
+
     char driverName;
     char raceCarColor;
     int totalLapTime;
-};
+}RaceCar;
 // Print functions section
 void printIntro(){  //une fonction  qui imprime un message d'introduction amusant pour la course sur la console
         printf(" Bienvenue a notre evenement principal, les fans de course numerique !\n");
@@ -27,10 +28,14 @@ void printCountDown(){ // une fonction qui imprime un message amusant de compte 
     printf("\n\nCoureurs prets ! Dans...\n5\n4\n3\n2\n1\nCourse !");
 }
 
+void printFirstPlaceAfterLap(Race race){
+    printf("Après le tour numéro %d La première place est occupée par : %s dans la voiture de course %s !",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+}
+
 void printCongratulation(){ //une fonction doit accéder aux variables membres de race et afficher un message de félicitations
-    struct Race race;
-    race.firstPlaceDriverName="OSSAMA";
-    race.firstPlaceRaceCarColor="blue";
+    Race race;
+    race.firstPlaceDriverName;
+    race.firstPlaceRaceCarColor;
     printf("Felicitons tous %s, dans la voiture de course %s, pour son incroyable performance.\nC'etait vraiment une belle course et bonne nuit a tous !",race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 
 }
@@ -45,7 +50,23 @@ int calculateTimeToCompleteLap(){ //return le moyen de calculer le temps que met
     return s;
 }
 
+void updateRaceCar( RaceCar *raceCar){
+//    struct RaceCar raceCar;
+      raceCar->totalLapTime;
+}
 
+void updateFirstPlace( Race * race , RaceCar * raceCar1 , RaceCar * raceCar2){
+
+        if(raceCar1->totalLapTime<=raceCar2->totalLapTime){
+                strcpy(race->firstPlaceDriverName,raceCar1->driverName);
+                strcpy(race->firstPlaceRaceCarColor,raceCar1->raceCarColor);
+
+        }else{
+            strcpy(race->firstPlaceDriverName,raceCar2->driverName);
+            strcpy(race->firstPlaceRaceCarColor,raceCar2->raceCarColor);
+
+        }
+}
 
 int main()
 {
@@ -53,4 +74,12 @@ int main()
     printCountDown();
 //    printf("%d",calculateTimeToCompleteLap());
     srand(time(0));
-};
+}
+
+void startRace(RaceCar *raceCar1,RaceCar *raceCar2){
+    int i;
+  Race race={5,1,"",""};
+
+
+
+}
