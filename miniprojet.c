@@ -7,15 +7,15 @@
 typedef struct {//une structure Race qui possède les variables membres
     int numberOfLaps;
     int currentLap;
-    char firstPlaceDriverName;
-    char firstPlaceRaceCarColor;
+    char firstPlaceDriverName[20];
+    char firstPlaceRaceCarColor[20];
 
 }Race ;
 
 typedef struct  { //une structure RaceCar qui a les variables cars
 
-    char driverName;
-    char raceCarColor;
+    char driverName[20];
+    char raceCarColor[20];
     int totalLapTime;
 }RaceCar;
 // Print functions section
@@ -34,22 +34,23 @@ void printCountDown(){ // une fonction qui imprime un message amusant de compte 
     printf("Course !");
 }
 
+
+
 void printFirstPlaceAfterLap(Race race){
-    printf("Après le tour numéro %d \nLa première place est occupée par : %s dans la voiture de course %s !",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+    printf("\nAprès le tour numéro %d \nLa première place est occupée par : %s dans la voiture de course %s !\n\n\n",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 }
 
-void printCongratulation(){ //une fonction doit accéder aux variables membres de race et afficher un message de félicitations
-    Race race;
+void printCongratulation(Race race){ //une fonction doit accéder aux variables membres de race et afficher un message de félicitations
     race.firstPlaceDriverName;
     race.firstPlaceRaceCarColor;
-    printf("Felicitons tous %s, dans la voiture de course %s, pour son incroyable performance.\nC'etait vraiment une belle course et bonne nuit a tous !",race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+    printf("Felicitons tous %s\n, dans la voiture de course %s, pour son incroyable performance.\nC'etait vraiment une belle course et bonne nuit a tous !\n\n",race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 
 }
 
 // Logic functions section
 int calculateTimeToCompleteLap(){ //return le moyen de calculer le temps que met une voiture de course pour effectuer un tour.
     int s;
-    srand(time(0));
+
     int vitesse=(rand() %3)+1;
     int acceleration=(rand() %3)+1;
     int nerves=(rand() %3)+1;
@@ -77,28 +78,32 @@ void updateFirstPlace( Race * race , RaceCar * raceCar1 , RaceCar * raceCar2){
 
 void startRace(RaceCar *raceCar1,RaceCar *raceCar2){
     int i;
-  Race race={5,1};
+  Race race={5,1,"",""};
 
     for (i=0;i<race.numberOfLaps;i++){
 
             updateRaceCar(raceCar1);
             updateRaceCar(raceCar2);
             updateFirstPlace(&race ,raceCar1 , raceCar2);
+
             printFirstPlaceAfterLap(race);
+            race.currentLap++;
             sleep(1);
             }
-            printCongratulation();
+            printCongratulation(race);
 
 
 }
 
 int main()
 {
-    RaceCar car1={"Ossama","Blue",calculateTimeToCompleteLap()};
-    RaceCar car2={"Shurlee","White",calculateTimeToCompleteLap()};
+    RaceCar car1={"Ossama","Blue",3};
+    RaceCar car2={"Shurlee","White",2};
     printIntro();
     printCountDown();
     startRace(&car1,&car2);
+
+    srand(time(0));
     return 0;
 }
 
