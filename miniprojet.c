@@ -25,11 +25,17 @@ void printIntro(){  //une fonction  qui imprime un message d'introduction amusan
 }
 
 void printCountDown(){ // une fonction qui imprime un message amusant de compte à rebours pour nos coureurs
-    printf("\n\nCoureurs prets ! Dans...\n5\n4\n3\n2\n1\nCourse !");
+    printf("\n\nCoureurs prets ! Dans... \n");
+    int i;
+    for (i=5;i>0;i--){
+        printf("%d\n",i);
+        sleep(1);
+    }
+    printf("Course !");
 }
 
 void printFirstPlaceAfterLap(Race race){
-    printf("Après le tour numéro %d La première place est occupée par : %s dans la voiture de course %s !",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
+    printf("Après le tour numéro %d \nLa première place est occupée par : %s dans la voiture de course %s !",race.currentLap,race.firstPlaceDriverName,race.firstPlaceRaceCarColor);
 }
 
 void printCongratulation(){ //une fonction doit accéder aux variables membres de race et afficher un message de félicitations
@@ -43,6 +49,7 @@ void printCongratulation(){ //une fonction doit accéder aux variables membres de
 // Logic functions section
 int calculateTimeToCompleteLap(){ //return le moyen de calculer le temps que met une voiture de course pour effectuer un tour.
     int s;
+    srand(time(0));
     int vitesse=(rand() %3)+1;
     int acceleration=(rand() %3)+1;
     int nerves=(rand() %3)+1;
@@ -52,7 +59,7 @@ int calculateTimeToCompleteLap(){ //return le moyen de calculer le temps que met
 
 void updateRaceCar( RaceCar *raceCar){
 //    struct RaceCar raceCar;
-      raceCar->totalLapTime;
+      raceCar->totalLapTime+=calculateTimeToCompleteLap();
 }
 
 void updateFirstPlace( Race * race , RaceCar * raceCar1 , RaceCar * raceCar2){
@@ -68,18 +75,31 @@ void updateFirstPlace( Race * race , RaceCar * raceCar1 , RaceCar * raceCar2){
         }
 }
 
-int main()
-{
-    printIntro();
-    printCountDown();
-//    printf("%d",calculateTimeToCompleteLap());
-    srand(time(0));
-}
-
 void startRace(RaceCar *raceCar1,RaceCar *raceCar2){
     int i;
-  Race race={5,1,"",""};
+  Race race={5,1};
 
+    for (i=0;i<race.numberOfLaps;i++){
+
+            updateRaceCar(raceCar1);
+            updateRaceCar(raceCar2);
+            updateFirstPlace(&race ,raceCar1 , raceCar2);
+            printFirstPlaceAfterLap(race);
+            sleep(1);
+            }
+            printCongratulation();
 
 
 }
+
+int main()
+{
+    RaceCar car1={"Ossama","Blue",calculateTimeToCompleteLap()};
+    RaceCar car2={"Shurlee","White",calculateTimeToCompleteLap()};
+    printIntro();
+    printCountDown();
+    startRace(&car1,&car2);
+    return 0;
+}
+
+
